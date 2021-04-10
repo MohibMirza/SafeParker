@@ -1,8 +1,8 @@
 <template>
   <div>
     <Navbar />
-    <div class="container">
-      <Logo />
+    <div id="map-content">
+      <ExampleMap />
     </div>
   </div>
 </template>
