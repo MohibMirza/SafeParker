@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Set;
+import java.util.Vector;
 
 public class Main {
 
@@ -53,11 +54,16 @@ public class Main {
             e.printStackTrace();
         }
 
+        Vector<Crime> crimeSet = parse(jsonString);
+
+        System.out.println("CrimeSet Size: " + crimeSet.size());
+
+        printCrimeSet(Double.parseDouble(latitude), Double.parseDouble(longitude), 5000, crimeSet);
 
     }
 
-    public static Set<Crime> parse(String jsonString) {
-        Set<Crime> crimeSet = null;
+    public static Vector<Crime> parse(String jsonString) {
+        Vector<Crime> crimeSet = new Vector<Crime>();
 
         JsonParser parser = new JsonParser();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -66,13 +72,27 @@ public class Main {
         JsonArray ja = el.getAsJsonArray();
 
         for (int i = 0; i < ja.size(); i++) {
+            JsonObject crimeReport = ja.get(i).getAsJsonObject();
+            String category = crimeReport.get("category").getAsString();
+            String latitude = crimeReport.get("location").getAsJsonObject().get("latitude").getAsString();
+            String longitude = crimeReport.get("location").getAsJsonObject().get("longitude").getAsString();
 
+            Crime crime = new Crime(category, latitude, longitude);
+            crimeSet.add(crime);
+        }
+        return crimeSet;
+    }
+
+    public static void printCrimeSet(double latitude, double longitude, int distanceLimiter, Vector<Crime> crimeSet) {
+
+        for(int i = 0; i < crimeSet.size(); i++) {
+            Crime crime = crimeSet.get(i);
+
+            double dist = crime.distance(latitude, longitude);
+
+            if(dist < distanceLimiter)
+                System.out.println(crime.category + ": " + dist);
         }
 
-
-
-
-
-        return crimeSet;
     }
 }

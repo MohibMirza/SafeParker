@@ -1,15 +1,15 @@
 public class Crime {
 
     String category;
-    int latitude, longitude;
+    double latitude, longitude;
 
-    Crime(String category, int latitude, int longitude) {
+    Crime(String category, String latitude, String longitude) {
         this.category = category;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.latitude = Double.parseDouble(latitude);
+        this.longitude = Double.parseDouble(longitude);
     }
 
-    private double distance(double lat2, double lon2) { // returns in meters
+    public double distance(double lat2, double lon2) { // returns in meters
         double lat1 = this.latitude;
         double lon1 = this.longitude;
 
@@ -37,6 +37,5 @@ public class Crime {
     private static double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
     }
-
 
 }
