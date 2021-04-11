@@ -21,14 +21,14 @@
           <div>I am a popup</div>
         </l-popup>
       </l-marker> -->
-      <l-marker v-for="(event, index) in events" :key="index" :lat-lng="event">
+      <!-- <l-marker v-for="(event, index) in events" :key="index" :lat-lng="event">
         <l-icon
           :icon-url="`/images/${event.icon}.png`"
           shadow-url="/images/marker-shadow.png"
         >
         </l-icon>
-      </l-marker>
-      <l-control v-if="rank" position="topright" class="w-60">
+      </l-marker> -->
+      <l-control v-if="statistics" position="topright" class="w-60">
         <div class="col-span-12">
           <div class="flex flex-row bg-white shadow-sm rounded p-4">
             <div
@@ -88,9 +88,11 @@ export default {
         return []
       },
     },
-    locationRank: {
-      type: Number,
-      default: 0,
+    statistics: {
+      type: Object,
+      default() {
+        return {}
+      },
     },
   },
   data() {
@@ -116,13 +118,14 @@ export default {
   },
   computed: {
     rank() {
-      if (this.locationRank === 0) {
+      const locationRank = this.statistics?.locationRank
+      if (locationRank === 0) {
         return { color: 'green', value: 'A', icon: 'thermometer-empty' }
-      } else if (this.locationRank === 1) {
+      } else if (locationRank === 1) {
         return { color: 'purple', value: 'B', icon: 'thermometer-quarter' }
-      } else if (this.locationRank === 2) {
+      } else if (locationRank === 2) {
         return { color: 'yellow', value: 'C', icon: 'thermometer-half' }
-      } else if (this.locationRank === 3) {
+      } else if (locationRank === 3) {
         return { color: 'red', value: 'D', icon: 'thermometer-three-quarters' }
       }
       return null
@@ -131,9 +134,11 @@ export default {
   watch: {
     currentLocation(location) {
       if (location && location.coordinates) {
-        this.center = latLng(location.coordinates.lat, location.coordinates.lon)
-        this.position = this.center
-        this.map.setView(this.position, 18)
+        this.updateLocation(
+          location.coordinates.lat,
+          location.coordinates.lon,
+          18
+        )
       }
     },
     position: {
@@ -144,6 +149,11 @@ export default {
         this.$emit('input', { position: value })
       },
     },
+  },
+  created() {
+    if (this.currentLocation) {
+      this.updateLocation(this.currentLocation.lat, this.currentLocation.lon, 4)
+    }
   },
   mounted() {
     this.map = this.$refs.map.mapObject
@@ -157,6 +167,13 @@ export default {
     },
     onMapClick(value) {
       this.position = value.latlng
+    },
+    updateLocation(lat, lon, zoom) {
+      this.center = latLng(lat, lon)
+      this.position = this.center
+      this.$nextTick(() => {
+        this.map.setView(this.position, zoom)
+      })
     },
   },
 }

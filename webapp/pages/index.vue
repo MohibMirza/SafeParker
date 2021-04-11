@@ -2,21 +2,33 @@
   <div>
     <Navbar @search-address="searchAddress" />
     <div id="map-container">
-      <LeafletMap :current-location="location" />
+      <LeafletMap
+        :current-location="location"
+        :events="events"
+        :statistics="statistics"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import * as crimeService from '~/services/crime'
 export default {
   data() {
     return {
       location: null,
+      events: [],
+      statistics: {},
     }
+  },
+  async created() {
+    const { currentLocation, events, statistics } = await crimeService.getData()
+    this.location = currentLocation
+    this.events = events
+    this.statistics = statistics
   },
   methods: {
     searchAddress($event) {
-      console.log(('EVENT', $event))
       this.location = $event
     },
   },
