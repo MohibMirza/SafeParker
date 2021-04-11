@@ -175,7 +175,7 @@ public class Main {
         String json = gson.toJson(solution);
         
         try {
-            FileWriter myWriter = new FileWriter("data.json");
+            FileWriter myWriter = new FileWriter("crimeReport.json");
             myWriter.write(json);
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
