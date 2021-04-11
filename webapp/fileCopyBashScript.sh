@@ -3,3 +3,5 @@
 
 rm ./static/crimeReport.json
 cp ../backend/crimeReport.json ./static/
+
+echo "File Copy Done"
