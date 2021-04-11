@@ -15,8 +15,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String latitude = "51.544296";
-        String longitude = "-0.261267";
+        String latitude = "51.48205";
+        String longitude = "-0.11204";
 
         OkHttpClient client = new OkHttpClient();
 
@@ -44,26 +44,17 @@ public class Main {
         JsonElement el = parser.parse(jsonString);
         jsonString = gson.toJson(el); // done
 
-        try {
-            FileWriter myWriter = new FileWriter("data.json");
-            myWriter.write(jsonString );
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
 
         Vector<Crime> crimeSet = parse(jsonString, Double.parseDouble(latitude), Double.parseDouble(longitude));
 
         System.out.println("CrimeSet Size: " + crimeSet.size());
 
         printCrimeSet(Double.parseDouble(latitude), Double.parseDouble(longitude), 5000, crimeSet);
-        jsonCrimeSet(crimeSet);
         
         Map<String, Integer> incidentCount = countIncidents(crimeSet);
         double score = calculateScore(incidentCount);
-        System.out.println(score);
+        jsonCrimeWithScore(new CrimeSum(crimeSet,score));
+       
         
 
     }
@@ -163,6 +154,21 @@ public class Main {
         
         try {
             FileWriter myWriter = new FileWriter("test1.json");
+            myWriter.write(json);
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+    
+    public static void jsonCrimeWithScore(CrimeSum solution) {
+    	Gson gson = new GsonBuilder().setPrettyPrinting().create();  
+        String json = gson.toJson(solution);
+        
+        try {
+            FileWriter myWriter = new FileWriter("data.json");
             myWriter.write(json);
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
