@@ -59,6 +59,9 @@ public class Main {
         System.out.println("CrimeSet Size: " + crimeSet.size());
 
         printCrimeSet(Double.parseDouble(latitude), Double.parseDouble(longitude), 5000, crimeSet);
+        jsonCrimeSet(crimeSet);
+        
+        
 
     }
 
@@ -90,9 +93,24 @@ public class Main {
 
             double dist = crime.distance(latitude, longitude);
 
-            if(dist < distanceLimiter)
-                System.out.println(crime.category + ": " + dist);
+            //if(dist < distanceLimiter) System.out.println(crime.category + ": " + dist);
         }
 
     }
+    
+    public static void jsonCrimeSet(Vector<Crime> crimeSet) {
+    	Gson gson = new GsonBuilder().setPrettyPrinting().create();  
+        String json = gson.toJson(crimeSet);
+        
+        try {
+            FileWriter myWriter = new FileWriter("test1.json");
+            myWriter.write(json);
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+    
 }
