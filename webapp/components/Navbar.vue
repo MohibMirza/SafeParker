@@ -73,7 +73,10 @@
           </div>
         </div>
         <!-- <user-menu /> -->
-        <search class="flex flex-1" />
+        <search
+          class="flex flex-1"
+          @search-address="$emit('search-address', $event)"
+        />
       </div>
     </div>
 

@@ -22,7 +22,10 @@ export async function addressByCoordinates({ latitude, longitude }) {
     },
   })
 
-  return data.address
+  return {
+    address: data.address,
+    coordinates: { lat: latitude, lon: longitude },
+  }
 }
 
 export async function currentAddress() {

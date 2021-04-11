@@ -1,14 +1,26 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar @search-address="searchAddress" />
     <div id="map-container">
-      <LeafletMap />
+      <LeafletMap :current-location="location" />
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      location: null,
+    }
+  },
+  methods: {
+    searchAddress($event) {
+      console.log(('EVENT', $event))
+      this.location = $event
+    },
+  },
+}
 </script>
 
 <style>
