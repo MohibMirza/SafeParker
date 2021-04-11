@@ -46,13 +46,13 @@ export default {
   computed: {
     rank() {
       const locationRank = this.statistics?.locationRank
-      if (locationRank === 0) {
+      if (locationRank >= 8) {
         return { color: 'green', value: 'A', icon: 'thermometer-empty' }
-      } else if (locationRank === 1) {
+      } else if (locationRank >= 6) {
         return { color: 'purple', value: 'B', icon: 'thermometer-quarter' }
-      } else if (locationRank === 2) {
+      } else if (locationRank >= 3) {
         return { color: 'yellow', value: 'C', icon: 'thermometer-half' }
-      } else if (locationRank === 3) {
+      } else if (locationRank >= 0) {
         return { color: 'red', value: 'D', icon: 'thermometer-three-quarters' }
       }
       return { color: 'gray', value: 'No Rank', icon: 'question' }
