@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-white border-b border-gray-200">
+  <nav class="bg-white border-b border-gray-200 shadow-sm relative">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -60,33 +60,20 @@
                 class="border-b border-gray-900 text-gray-800 py-2 text-sm font-medium"
                 aria-current="page"
               >
+                Map
+              </a>
+
+              <a
+                href="#"
+                class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              >
                 Dashboard
-              </a>
-
-              <a
-                href="#"
-                class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Team
-              </a>
-
-              <a
-                href="#"
-                class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Projects
-              </a>
-
-              <a
-                href="#"
-                class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Calendar
               </a>
             </div>
           </div>
         </div>
-        <user-menu />
+        <!-- <user-menu /> -->
+        <search class="flex flex-1" />
       </div>
     </div>
 
@@ -96,40 +83,24 @@
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-500 hover:bg-gray-700 hover:text-white" -->
         <a
           href="#"
-          class="border-b border-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+          class="bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium"
           aria-current="page"
         >
+          Map
+        </a>
+
+        <a
+          href="#"
+          class="text-gray-500 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+        >
           Dashboard
-        </a>
-
-        <a
-          href="#"
-          class="text-gray-500 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-        >
-          Team
-        </a>
-
-        <a
-          href="#"
-          class="text-gray-500 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-        >
-          Projects
-        </a>
-
-        <a
-          href="#"
-          class="text-gray-500 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-        >
-          Calendar
         </a>
       </div>
     </div>
   </nav>
 </template>
 <script>
-import UserMenu from './UserMenu.vue'
 export default {
-  components: { UserMenu },
   data() {
     return {
       isMenuOpen: false,
@@ -137,3 +108,8 @@ export default {
   },
 }
 </script>
+<style>
+nav {
+  z-index: 999;
+}
+</style>

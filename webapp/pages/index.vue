@@ -1,8 +1,8 @@
 <template>
   <div>
     <Navbar />
-    <div id="map-content">
-      <ExampleMap />
+    <div id="map-container">
+      <LeafletMap />
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@ body {
   padding: 0;
   height: 100%;
 }
-#map-content {
+#map-container {
   position: absolute;
   top: 65px;
   overflow: hidden;
