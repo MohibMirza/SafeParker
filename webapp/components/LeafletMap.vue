@@ -1,15 +1,11 @@
 <template>
   <div style="height: 100%; width: 100%">
-    <div style="height: 50px; overflow: auto">
-      <p>First marker is placed at {{ withPopup.lat }}, {{ withPopup.lng }}</p>
-      <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
-    </div>
     <l-map
       ref="map"
       :zoom="zoom"
       :center="position || center"
       :options="mapOptions"
-      style="height: 90%"
+      style="height: 95%"
       @dblclick="onMapClick"
       @update:center="centerUpdate"
       @update:zoom="zoomUpdate"
@@ -114,8 +110,6 @@ export default {
           '&copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors</a>',
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       },
-      withPopup: latLng(47.41322, -1.219482),
-      withTooltip: latLng(47.41422, -1.250482),
       currentZoom: 4,
       currentCenter: latLng(47.41322, -1.219482),
     }
@@ -167,3 +161,8 @@ export default {
   },
 }
 </script>
+<style>
+.leaflet-control-container .leaflet-top {
+  z-index: 990;
+}
+</style>

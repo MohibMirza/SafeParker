@@ -33,3 +33,14 @@ export async function currentAddress() {
 
   return addressByCoordinates(coordinates)
 }
+
+export async function searchAddress(query) {
+  const { data } = await clientAPI(baseURL).get('/search', {
+    params: {
+      format: 'jsonv2',
+      q: query,
+    },
+  })
+
+  return data
+}
