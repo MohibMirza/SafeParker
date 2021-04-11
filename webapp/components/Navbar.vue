@@ -63,12 +63,12 @@
                 Map
               </a>
 
-              <a
+              <!-- <a
                 href="#"
                 class="text-gray-500 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >
                 Dashboard
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -92,12 +92,12 @@
           Map
         </a>
 
-        <a
+        <!-- <a
           href="#"
           class="text-gray-500 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
         >
           Dashboard
-        </a>
+        </a> -->
       </div>
     </div>
   </nav>
