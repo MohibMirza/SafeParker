@@ -13,8 +13,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String latitude = "51.507400";
-        String longitude = "0.127800";
+        String latitude = "51.545341";
+        String longitude = "-0.075787";
 
         OkHttpClient client = new OkHttpClient();
 
@@ -58,7 +58,7 @@ public class Main {
 
         System.out.println("CrimeSet Size: " + crimeSet.size());
 
-        printCrimeSet(Double.parseDouble(latitude), Double.parseDouble(longitude), 5000, crimeSet);
+        printCrimeSet(Double.parseDouble(latitude), Double.parseDouble(longitude), 1000, crimeSet);
 
     }
 
@@ -85,13 +85,30 @@ public class Main {
 
     public static void printCrimeSet(double latitude, double longitude, int distanceLimiter, Vector<Crime> crimeSet) {
 
+        Vector<Integer> numb = new Vector<Integer>(); //parallel vectors to store total
+        Vector<String> type = new Vector<String>();   //number of each appeared type of crime
         for(int i = 0; i < crimeSet.size(); i++) {
             Crime crime = crimeSet.get(i);
 
             double dist = crime.distance(latitude, longitude);
 
-            if(dist < distanceLimiter)
-                System.out.println(crime.category + ": " + dist);
+            if(dist < distanceLimiter) {
+                //System.out.println(crime.category + ": " + dist);
+                if (!(type.contains(crime.category))) {
+                    //in case this type was not yet added to the vector
+                    type.add(crime.category);
+                    numb.add(0);
+                }
+                else
+                {
+                    // numb.setElementAt(type.indexOf(crime.category)) = numb.setElementAt(type.indexOf(crime.category)) + 1;
+                    int j = type.indexOf(crime.category);
+                    numb.set(j, numb.get(j)+1);
+                }
+            }
+        }
+        for(int i = 0; i < numb.size(); i++) {
+            System.out.println(type.get(i) + " : " + numb.get(i));
         }
 
     }
