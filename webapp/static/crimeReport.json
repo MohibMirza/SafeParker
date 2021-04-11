@@ -1,0 +1,16 @@
+{
+    "currentLocation": {
+        "lat": 39,
+        "lon": -98
+    },
+    "events": [
+        {
+            "something": true
+        }
+    ],
+    "statistics": {
+        "locationRank": 1, 
+        "vehicleThefts": 15,
+        "burglary": 3
+    }
+}
