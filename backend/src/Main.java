@@ -13,8 +13,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String latitude = "51.545341";
-        String longitude = "-0.075787";
+        String latitude = "51.405656";
+        String longitude = "0.014833";
 
         OkHttpClient client = new OkHttpClient();
 
@@ -97,7 +97,7 @@ public class Main {
                 if (!(type.contains(crime.category))) {
                     //in case this type was not yet added to the vector
                     type.add(crime.category);
-                    numb.add(0);
+                    numb.add(1);
                 }
                 else
                 {
