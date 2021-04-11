@@ -75,6 +75,7 @@
         <!-- <user-menu /> -->
         <search
           class="flex flex-1"
+          :initial-search="initialSearch"
           @search-address="$emit('search-address', $event)"
         />
       </div>
@@ -104,6 +105,12 @@
 </template>
 <script>
 export default {
+  props: {
+    initialSearch: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       isMenuOpen: false,

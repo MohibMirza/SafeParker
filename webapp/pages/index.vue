@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar @search-address="searchAddress" />
+    <Navbar :initial-search="initialSearch" @search-address="searchAddress" />
     <div id="map-container">
       <LeafletMap
         :current-location="location"
@@ -13,19 +13,38 @@
 
 <script>
 import * as crimeService from '~/services/crime'
+import * as locationService from '~/services/location'
 export default {
   data() {
     return {
       location: null,
       events: [],
       statistics: {},
+      initialLocation: {}, // used for when starting the app
     }
   },
+  computed: {
+    initialSearch() {
+      return this.initialLocation?.display_name || ''
+    },
+  },
   async created() {
-    const { currentLocation, events, statistics } = await crimeService.getData()
-    this.location = currentLocation
-    this.events = events
-    this.statistics = statistics
+    try {
+      const {
+        currentLocation,
+        events,
+        statistics,
+      } = await crimeService.getData()
+      this.location = currentLocation
+      this.events = events
+      this.statistics = statistics
+      this.initialLocation = await locationService.addressByCoordinates({
+        latitude: currentLocation.lat,
+        longitude: currentLocation.lon,
+      })
+    } catch (error) {
+      console.log(error)
+    }
   },
   methods: {
     searchAddress($event) {

@@ -60,16 +60,24 @@ import * as locationService from '~/services/location'
 
 export default {
   components: { LocationFrame },
+  props: {
+    initialSearch: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
-      searchTerm: '',
+      searchTerm: this.initialSearch,
       localAddress: null,
       searchResults: [],
     }
   },
   watch: {
-    searchTerm() {
-      this._debounceSearch()
+    searchTerm(val) {
+      if (val !== this.initialSearch) {
+        this._debounceSearch()
+      }
     },
   },
   created() {

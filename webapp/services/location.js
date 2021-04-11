@@ -23,6 +23,7 @@ export async function addressByCoordinates({ latitude, longitude }) {
   })
 
   return {
+    display_name: data.display_name,
     address: data.address,
     coordinates: { lat: latitude, lon: longitude },
   }
