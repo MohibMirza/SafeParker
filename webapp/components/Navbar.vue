@@ -49,7 +49,7 @@
           </button>
         </div>
         <div
-          class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+          class="sm:flex-1 ml-10 mr-6 flex items-center justify-center sm:items-stretch sm:justify-start"
         >
           <navbar-logo />
           <div class="hidden sm:block sm:ml-6">

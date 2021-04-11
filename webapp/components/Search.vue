@@ -1,30 +1,37 @@
 <template>
   <div>
-    <div class="mt-1 relative rounded-md shadow-sm w-full">
+    <location-frame>
       <div
-        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+        slot-scope="{ address, fetchAddress, geolocationSupported, error }"
+        class="bg-transparent border rounded-md w-full focus-within:ring ring-primary focus-within:border-indigo-500 flex flex-wrap justify-between"
       >
-        <!-- <span class="text-gray-500 sm:text-sm"> $ </span> -->
-      </div>
-      <input
-        type="text"
-        class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
-        placeholder="Search"
-      />
-      <!-- <button> -->
-      <!-- </button> -->
-      <!-- <div class="absolute inset-y-0 right-0 flex items-center">
-        <label for="currency" class="sr-only">Currency</label>
-        <select
-          id="currency"
-          name="currency"
-          class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+        <button
+          v-if="geolocationSupported && !error"
+          type="button"
+          class="bg-transparent pl-2"
+          :class="{ 'text-blue-500': !!address }"
+          @click="fetchAddress"
         >
-          <option>USD</option>
-          <option>CAD</option>
-          <option>EUR</option>
-        </select>
-      </div> -->
-    </div>
+          <i class="fas fa-location-arrow"></i>
+        </button>
+        <input
+          type="search"
+          class="flex-1 p-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none focus:outline-none focus:placeholder-transparent focus:ring-0"
+          :placeholder="address ? 'Marked Location' : 'Search'"
+        />
+        <button
+          type="button"
+          class="flex justify-center p-2 m-1 text-white transition-colors duration-200 transform rounded-md bg-indigo-500 hover:bg-indigo-300 focus:outline-none focus:bg-indigo-300"
+        >
+          Go
+        </button>
+      </div>
+    </location-frame>
   </div>
 </template>
+<script>
+import LocationFrame from './LocationFrame'
+export default {
+  components: { LocationFrame },
+}
+</script>
