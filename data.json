@@ -2441,5 +2441,12 @@
       "longitude": -0.115789
     }
   ],
-  "score": 5.790434782608696
+  "score": 5.790434782608696,
+  "vehicleTheft": 0,
+  "arson": 16,
+  "theft": 29,
+  "robbery": 9,
+  "violence": 104,
+  "latitude": 51.48205,
+  "longitude": -0.11204
 }

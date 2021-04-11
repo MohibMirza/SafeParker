@@ -53,7 +53,14 @@ public class Main {
         
         Map<String, Integer> incidentCount = countIncidents(crimeSet);
         double score = calculateScore(incidentCount);
-        jsonCrimeWithScore(new CrimeSum(crimeSet,score));
+        int vehicleTheft = incidentCount.containsKey("vehicle-theft") ? incidentCount.get("vehicle-crime") : 0;
+    	int arsonIncident = (incidentCount.containsKey("criminal-damage-arson")) ? incidentCount.get("criminal-damage-arson") : 0;
+    	int theftIncident = incidentCount.containsKey("other-theft") ? incidentCount.get("other-theft") : 0;
+    	int robberyIncident = incidentCount.containsKey("robbery") ? incidentCount.get("robbery") : 0;
+    	int violenceIncident = incidentCount.containsKey("violent-crime") ? incidentCount.get("violent-crime") : 0; 
+
+        jsonCrimeWithScore(new CrimeSum(crimeSet,score,vehicleTheft,arsonIncident,theftIncident,robberyIncident,violenceIncident
+        				,Double.parseDouble(latitude), Double.parseDouble(longitude)));
        
         
 
