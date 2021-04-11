@@ -1,5 +1,6 @@
 # Project exclude paths
-/out/
-
-
-# Web app
+backend/out/
+.idea
+*.iml
+backend/.idea/
+backend/*.iml

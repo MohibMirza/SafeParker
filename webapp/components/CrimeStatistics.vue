@@ -1,6 +1,6 @@
 <template>
   <div v-if="statistics">
-    <div class="col-span-12">
+    <div v-if="rank" class="col-span-12">
       <div class="flex flex-row bg-white shadow-sm rounded p-4">
         <div
           class="flex items-center justify-center flex-shrink-0 h-12 w-12 rounded-xl text-4xl"
@@ -16,22 +16,24 @@
         </div>
       </div>
     </div>
-    <div v-if="statistics.vehicleThefts" class="col-span-12">
+    <div v-for="stat in eventStats" :key="stat.id" class="col-span-12">
       <div class="flex flex-row bg-white shadow-sm rounded p-4">
         <div
           class="flex items-center justify-center flex-shrink-0 h-6 w-12 rounded-xl text-xl"
           :class="`text-${rank.color}-500`"
         >
-          {{ statistics.vehicleThefts }}
+          {{ stat.value }}
         </div>
         <div class="flex flex-col flex-grow ml-4">
-          <div class="text-sm text-gray-500">Vehicle Theft</div>
+          <div class="text-sm text-gray-500">{{ stat.name }}</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { crimeType } from '~/util/crime.util'
+
 export default {
   props: {
     statistics: {
@@ -53,7 +55,20 @@ export default {
       } else if (locationRank === 3) {
         return { color: 'red', value: 'D', icon: 'thermometer-three-quarters' }
       }
-      return null
+      return { color: 'gray', value: 'No Rank', icon: 'question' }
+    },
+    eventStats() {
+      if (this.statistics.events) {
+        return Object.entries(this.statistics.events).reduce((acc, event) => {
+          acc.push({
+            id: event[0],
+            value: event[1],
+            ...crimeType[event[0]],
+          })
+          return acc
+        }, [])
+      }
+      return []
     },
   },
 }

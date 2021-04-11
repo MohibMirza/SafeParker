@@ -16,20 +16,39 @@
       />
       <l-marker v-if="position" :lat-lng="position" />
 
-      <!-- <l-marker :lat-lng="withPopup">
+      <l-marker
+        v-for="(event, index) in eventsIcon"
+        :key="index"
+        :lat-lng="eventLatLng(event)"
+        :visible="showCrime"
+      >
         <l-popup>
-          <div>I am a popup</div>
+          <div>{{ event.category }}</div>
         </l-popup>
-      </l-marker> -->
-      <!-- <l-marker v-for="(event, index) in events" :key="index" :lat-lng="event">
-        <l-icon
-          :icon-url="`/images/${event.icon}.png`"
-          shadow-url="/images/marker-shadow.png"
-        >
+        <l-icon>
+          <div>
+            <i class="text-2xl" :class="event.icon"></i>
+          </div>
         </l-icon>
-      </l-marker> -->
+      </l-marker>
       <l-control v-if="statistics" position="topright" class="w-60">
         <crime-statistics :statistics="statistics" />
+      </l-control>
+      <l-control position="bottomleft" class="w-60">
+        <button
+          type="button"
+          class="flex justify-center p-2 m-1 text-white transition-colors duration-200 transform rounded-md bg-indigo-500 hover:bg-indigo-300 focus:outline-none focus:bg-indigo-300"
+          @click="toggleCrime"
+        >
+          {{ showCrime ? 'Hide Crime' : 'Show Crime' }}
+        </button>
+        <button
+          type="button"
+          class="flex justify-center p-2 m-1 text-white transition-colors duration-200 transform rounded-md bg-indigo-500 hover:bg-indigo-300 focus:outline-none focus:bg-indigo-300"
+          @click="resetCenter"
+        >
+          Reset Center
+        </button>
       </l-control>
       <l-control-zoom position="bottomright"></l-control-zoom>
     </l-map>
@@ -42,7 +61,16 @@ import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 
 import { latLng, Icon } from 'leaflet'
 
-import { LMap, LTileLayer, LMarker, LControl, LControlZoom } from 'vue2-leaflet'
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+  LPopup,
+  LIcon,
+  LControl,
+  LControlZoom,
+} from 'vue2-leaflet'
+import { crimeType } from '~/util/crime.util'
 
 delete Icon.Default.prototype._getIconUrl
 Icon.Default.mergeOptions({
@@ -57,6 +85,8 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
+    LPopup,
+    LIcon,
     LControl,
     LControlZoom,
   },
@@ -92,6 +122,8 @@ export default {
       },
       position: null,
 
+      showCrime: false,
+
       tileProvider: {
         attribution:
           '&copy; <a href="http://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors</a>',
@@ -101,7 +133,16 @@ export default {
       currentCenter: latLng(47.41322, -1.219482),
     }
   },
-
+  computed: {
+    eventsIcon() {
+      return this.events.map((event) => {
+        return {
+          icon: crimeType[event.category]?.icon || 'fas fa-exclamation',
+          ...event,
+        }
+      }, [])
+    },
+  },
   watch: {
     currentLocation(location) {
       if (location && location.coordinates) {
@@ -145,6 +186,18 @@ export default {
       this.$nextTick(() => {
         this.map.setView(this.position, zoom)
       })
+    },
+    resetCenter() {
+      this.center = this.position
+      this.$nextTick(() => {
+        this.map.setView(this.position, 16)
+      })
+    },
+    eventLatLng(event) {
+      return latLng(event.latitude, event.longitude)
+    },
+    toggleCrime() {
+      this.showCrime = !this.showCrime
     },
   },
 }
